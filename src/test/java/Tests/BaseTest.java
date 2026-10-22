@@ -21,31 +21,30 @@ public class BaseTest {
 
     @Before
     public void setUp() {
-        ChromeOptions options = new ChromeOptions();
+            ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-
-        if ("true".equals(System.getProperty("headless"))) {
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
             options.addArguments("--window-size=1920,1080");
+            options.addArguments("--start-maximized");
+
+            if ("true".equals(System.getProperty("headless"))) {
+                options.addArguments("--headless=new");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--disable-gpu");
+            }
+
+            driver = new ChromeDriver(options);
+
+            homePage = new HomePage(driver);
+            searchResultPage = new SearchResultPage(driver);
+            singleAdPage = new SingleAdPage(driver);
+            loginPage = new LoginPage(driver);
+            savedAdsPage = new SavedAdsPage(driver);
+            postAdPage = new PostAdPage(driver);
+            myProfilPage = new MyProfilPage(driver);
         }
 
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-
-
-        homePage = new HomePage(driver);
-        searchResultPage = new SearchResultPage(driver);
-        singleAdPage = new SingleAdPage(driver);
-        loginPage = new LoginPage(driver);
-        savedAdsPage = new SavedAdsPage(driver);
-        postAdPage = new PostAdPage(driver);
-        myProfilPage = new MyProfilPage(driver);
-
-
-    }
 
     @After
     public void tearDown() throws Exception {

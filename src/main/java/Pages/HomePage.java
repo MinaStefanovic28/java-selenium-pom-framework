@@ -1,9 +1,6 @@
 package Pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -29,11 +26,19 @@ public class HomePage extends BasePage {
 
     public void acceptCookies() {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(cookieAcceptBtn));
-            button.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(7));
+            By cookieBtn = By.id("didomi-notice-agree-button");
+
+            WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(cookieBtn));
+
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
         } catch (Exception e) {
-            System.out.println("Kolačići se nisu pojavili ili su već prihvaćeni, nastavljam test.");
+            try {
+                ((JavascriptExecutor) driver).executeScript(
+                        "var elem = document.getElementById('didomi-host'); if(elem) elem.remove();"
+                );
+            } catch (Exception ignored) {}
+            System.out.println("Kolačići nisu pronađeni ili su uklonjeni iz DOM-a.");
         }
     }
 
