@@ -23,6 +23,8 @@ public class BaseTest {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
 
+        options.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+
         if ("true".equals(System.getProperty("headless"))) {
             options.addArguments("--headless=new");
             options.addArguments("--no-sandbox");
