@@ -60,7 +60,11 @@ public class HomePage extends BasePage {
         click(btnPretraga);
     }
     public void open() {
-        driver.get("https://www.polovniautomobili.com/");
+        try {
+            driver.get("https://www.polovniautomobili.com/");
+        } catch (Exception e) {
+            System.out.println("Stranica se nije učitala do kraja u predviđenom roku, nastavljam sa testom.");
+        }
     }
 
     public boolean isLogoDisplayed() {

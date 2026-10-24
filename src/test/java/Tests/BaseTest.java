@@ -3,9 +3,12 @@ package Tests;
 import Pages.*;
 import org.junit.After;
 import org.junit.Before;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.time.Duration;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -21,29 +24,37 @@ public class BaseTest {
 
     @Before
     public void setUp() {
-            ChromeOptions options = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
 
-            options.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-            options.addArguments("--window-size=1920,1080");
-            options.addArguments("--start-maximized");
+        // Strategija koja sprečava da driver beskonačno čeka učitavanje reklama/skripti
+        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 
-            if ("true".equals(System.getProperty("headless"))) {
-                options.addArguments("--headless=new");
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
-                options.addArguments("--disable-gpu");
-            }
+        // User-Agent i stabilizatori za CI/CD
+        options.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--start-maximized");
 
-            driver = new ChromeDriver(options);
-
-            homePage = new HomePage(driver);
-            searchResultPage = new SearchResultPage(driver);
-            singleAdPage = new SingleAdPage(driver);
-            loginPage = new LoginPage(driver);
-            savedAdsPage = new SavedAdsPage(driver);
-            postAdPage = new PostAdPage(driver);
-            myProfilPage = new MyProfilPage(driver);
+        if ("true".equals(System.getProperty("headless"))) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
         }
+
+        driver = new ChromeDriver(options);
+
+        // Postavljanje maksimalnog vremena učitavanja stranice na 30 sekundi
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        homePage = new HomePage(driver);
+        searchResultPage = new SearchResultPage(driver);
+        singleAdPage = new SingleAdPage(driver);
+        loginPage = new LoginPage(driver);
+        savedAdsPage = new SavedAdsPage(driver);
+        postAdPage = new PostAdPage(driver);
+        myProfilPage = new MyProfilPage(driver);
+    }
 
 
     @After
