@@ -15,7 +15,7 @@ public class SingleAdPage extends BasePage {
     private By sendMsgBtn = By.cssSelector("button[data-testid=\"sendMessageButton\"]");
 
     //pop-up Contact Seller
-    private By textArea = By.xpath("//*[@placeholder=\"Tekst poruke\"]");
+    private By textArea = By.cssSelector("textarea[data-testid='send-message-input']");
     private By submitMsgBtn = By.id("sendMessageSubmit");
     public By popUpMsg = By.id("confirmationModal");
     private By closePopUpMsgBtn = By.xpath("//*[text()=\"U redu\"]");
