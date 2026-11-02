@@ -101,7 +101,6 @@ public class SmokeTests extends BaseTest {
         loginPage.loginWithValidCredetntials();
         homePage.clickLoginButton();
 
-        homePage.acceptPromoCredit();
         myProfilPage.openFollowedAds();
 
 
