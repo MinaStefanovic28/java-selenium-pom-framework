@@ -8,7 +8,7 @@ public class PostAdPage extends BasePage {
         super(driver);
     }
 
-    private By carCategoryBtn = By.id("carsDesktopView");
+    private By carCategoryBtn = By.xpath("//button[@value=\"autmobili\"]");
 
     //Obavezna input polja sa zvezdicom
     //Osnovne informacije
